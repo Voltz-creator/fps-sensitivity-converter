@@ -9,9 +9,12 @@ html {
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-
     min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
     color: #ffffff;
 
@@ -36,12 +39,10 @@ a {
 
 .navbar {
     position: sticky;
-
     top: 0;
+    z-index: 100;
 
-    z-index: 10;
-
-    background: rgba(7, 10, 18, 0.82);
+    background: rgba(7, 10, 18, 0.88);
 
     backdrop-filter: blur(15px);
 
@@ -50,7 +51,6 @@ a {
 
 .nav-container {
     width: 92%;
-
     max-width: 1100px;
 
     min-height: 65px;
@@ -58,44 +58,38 @@ a {
     margin: auto;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 }
 
 .brand {
-    font-weight: bold;
-
     font-size: 17px;
+    font-weight: bold;
 }
 
 .nav-container nav {
     display: flex;
-
     gap: 25px;
 }
 
 .nav-container nav a {
     color: #9da8bf;
-
     font-size: 14px;
 
     transition: 0.2s;
 }
 
 .nav-container nav a:hover {
-    color: white;
+    color: #ffffff;
 }
 
 
 /* =========================
-   CONTAINER
+   MAIN
 ========================= */
 
 .container {
     width: 92%;
-
     max-width: 1050px;
 
     margin: auto;
@@ -115,15 +109,19 @@ a {
 }
 
 .hero-icon {
-    font-size: 50px;
-
     margin-bottom: 15px;
+
+    font-size: 50px;
 }
 
 .hero h1 {
-    font-size: clamp(32px, 6vw, 54px);
-
     margin-bottom: 15px;
+
+    font-size: clamp(
+        32px,
+        6vw,
+        54px
+    );
 }
 
 .hero p {
@@ -152,21 +150,20 @@ a {
 .badge {
     display: inline-block;
 
+    margin-bottom: 8px;
+
     color: #8589ff;
 
     font-size: 11px;
-
     font-weight: bold;
 
     letter-spacing: 1.5px;
-
-    margin-bottom: 8px;
 }
 
 .section-heading h2 {
-    font-size: 28px;
-
     margin-bottom: 8px;
+
+    font-size: 28px;
 }
 
 .section-heading p {
@@ -177,7 +174,7 @@ a {
 
 
 /* =========================
-   CONVERTER
+   CONVERTER CARD
 ========================= */
 
 .converter-card {
@@ -189,7 +186,12 @@ a {
 
     padding: 25px;
 
-    background: rgba(18, 25, 44, 0.95);
+    background: rgba(
+        18,
+        25,
+        44,
+        0.95
+    );
 
     border: 1px solid #293651;
 
@@ -208,9 +210,13 @@ a {
     border-radius: 15px;
 }
 
+
+/* =========================
+   STEP
+========================= */
+
 .step {
     display: flex;
-
     align-items: center;
 
     gap: 11px;
@@ -220,13 +226,10 @@ a {
 
 .step > span {
     width: 32px;
-
     height: 32px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     border-radius: 50%;
@@ -250,17 +253,17 @@ a {
 
 
 /* =========================
-   INPUTS
+   FORM ELEMENTS
 ========================= */
 
 label {
     display: block;
 
+    margin-bottom: 7px;
+
     color: #aab4ca;
 
     font-size: 13px;
-
-    margin-bottom: 7px;
 }
 
 select,
@@ -273,7 +276,7 @@ input {
 
     background: #080d1a;
 
-    color: white;
+    color: #ffffff;
 
     border: 1px solid #303c59;
 
@@ -287,6 +290,15 @@ input {
 select:focus,
 input:focus {
     border-color: #7377ff;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(
+            99,
+            102,
+            241,
+            0.15
+        );
 }
 
 
@@ -336,13 +348,11 @@ input:focus {
 ========================= */
 
 .live-result {
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
     min-height: 72px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     padding: 13px;
 
@@ -355,13 +365,13 @@ input:focus {
 
 .live-result small,
 .cm-result small {
+    margin-bottom: 5px;
+
     color: #727e99;
 
     font-size: 10px;
 
     letter-spacing: 1px;
-
-    margin-bottom: 5px;
 }
 
 .live-result strong {
@@ -370,29 +380,29 @@ input:focus {
 
 
 /* =========================
-   SWAP
+   SWAP BUTTON
 ========================= */
 
 .swap-button {
     flex-shrink: 0;
 
     width: 50px;
-
     height: 50px;
 
     border: none;
-
     border-radius: 50%;
 
     background: #6366f1;
 
-    color: white;
+    color: #ffffff;
 
     font-size: 24px;
 
     cursor: pointer;
 
-    transition: 0.25s;
+    transition:
+        transform 0.25s,
+        background 0.2s;
 }
 
 .swap-button:hover {
@@ -414,26 +424,30 @@ input:focus {
     padding: 16px;
 
     border: none;
-
     border-radius: 11px;
 
     background: #6366f1;
 
-    color: white;
+    color: #ffffff;
 
     font-size: 16px;
-
     font-weight: bold;
 
     cursor: pointer;
 
-    transition: 0.2s;
+    transition:
+        transform 0.2s,
+        background 0.2s;
 }
 
 .primary-button:hover {
-    background: #7679ff;
+    background: #777aff;
 
     transform: translateY(-2px);
+}
+
+.primary-button:active {
+    transform: translateY(0);
 }
 
 .secondary-button {
@@ -445,7 +459,7 @@ input:focus {
 
     background: #10182b;
 
-    color: white;
+    color: #ffffff;
 
     cursor: pointer;
 }
@@ -464,7 +478,12 @@ input:focus {
 
     padding: 25px;
 
-    background: rgba(18, 25, 44, 0.95);
+    background: rgba(
+        18,
+        25,
+        44,
+        0.95
+    );
 
     border: 1px solid #293651;
 
@@ -472,7 +491,7 @@ input:focus {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .result-top {
@@ -493,13 +512,16 @@ input:focus {
 
 
 /* =========================
-   MAIN SETUP RESULT
+   MAIN RESULT
 ========================= */
 
 .setup-result {
     display: grid;
 
-    grid-template-columns: 1.3fr 1fr 0.8fr;
+    grid-template-columns:
+        1.3fr
+        1fr
+        0.8fr;
 
     gap: 12px;
 
@@ -519,13 +541,13 @@ input:focus {
 .setup-result span {
     display: block;
 
+    margin-bottom: 8px;
+
     color: #727e99;
 
     font-size: 10px;
 
     letter-spacing: 1px;
-
-    margin-bottom: 8px;
 }
 
 .setup-result strong {
@@ -533,9 +555,9 @@ input:focus {
 }
 
 .setup-sensitivity strong {
-    font-size: 32px;
-
     color: #8b8eff;
+
+    font-size: 32px;
 }
 
 
@@ -585,7 +607,8 @@ input:focus {
 .stats-grid {
     display: grid;
 
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+        repeat(2, 1fr);
 
     gap: 12px;
 }
@@ -601,11 +624,11 @@ input:focus {
 .stat span {
     display: block;
 
+    margin-bottom: 7px;
+
     color: #7e8aa4;
 
     font-size: 12px;
-
-    margin-bottom: 7px;
 }
 
 .stat strong {
@@ -614,13 +637,34 @@ input:focus {
 
 
 /* =========================
+   NOTICE
+========================= */
+
+.notice {
+    padding: 13px;
+
+    margin-top: 15px;
+
+    background: #1b1a2a;
+
+    border-radius: 9px;
+
+    color: #aaa8c1;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
    FORMULA
 ========================= */
 
 .formula-card {
-    margin-top: 20px;
-
     padding: 20px;
+
+    margin-top: 20px;
 
     background: #0e1527;
 
@@ -669,22 +713,6 @@ input:focus {
     line-height: 1.5;
 }
 
-.notice {
-    margin-top: 15px;
-
-    padding: 13px;
-
-    border-radius: 9px;
-
-    background: #1b1a2a;
-
-    color: #aaa8c1;
-
-    font-size: 12px;
-
-    line-height: 1.5;
-}
-
 
 /* =========================
    CM/360
@@ -693,7 +721,12 @@ input:focus {
 .tool-card {
     padding: 25px;
 
-    background: rgba(18, 25, 44, 0.95);
+    background: rgba(
+        18,
+        25,
+        44,
+        0.95
+    );
 
     border: 1px solid #293651;
 
@@ -703,15 +736,16 @@ input:focus {
 .two-columns {
     display: grid;
 
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+        repeat(2, 1fr);
 
     gap: 15px;
 }
 
 .cm-result {
-    margin-top: 20px;
-
     padding: 25px;
+
+    margin-top: 20px;
 
     text-align: center;
 
@@ -725,9 +759,9 @@ input:focus {
 .cm-result strong {
     display: block;
 
-    font-size: 40px;
-
     margin-top: 7px;
+
+    font-size: 40px;
 }
 
 
@@ -738,13 +772,19 @@ input:focus {
 .compare-card {
     display: grid;
 
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+        repeat(2, 1fr);
 
     gap: 20px;
 
     padding: 25px;
 
-    background: rgba(18, 25, 44, 0.95);
+    background: rgba(
+        18,
+        25,
+        44,
+        0.95
+    );
 
     border: 1px solid #293651;
 
@@ -764,9 +804,9 @@ input:focus {
 }
 
 .compare-result {
-    margin-top: 20px;
-
     padding: 25px;
+
+    margin-top: 20px;
 
     text-align: center;
 
@@ -778,17 +818,18 @@ input:focus {
 }
 
 #compareStatus {
+    margin-bottom: 20px;
+
     font-size: 22px;
 
     font-weight: bold;
-
-    margin-bottom: 20px;
 }
 
 .compare-values {
     display: grid;
 
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+        repeat(2, 1fr);
 
     gap: 15px;
 }
@@ -804,11 +845,11 @@ input:focus {
 .compare-values span {
     display: block;
 
+    margin-bottom: 7px;
+
     color: #7e8aa4;
 
     font-size: 12px;
-
-    margin-bottom: 7px;
 }
 
 .compare-values strong {
@@ -823,7 +864,12 @@ input:focus {
 .info-card {
     padding: 25px;
 
-    background: rgba(18, 25, 44, 0.8);
+    background: rgba(
+        18,
+        25,
+        44,
+        0.8
+    );
 
     border: 1px solid #293651;
 
@@ -835,11 +881,11 @@ input:focus {
 }
 
 .info-card p {
+    margin-bottom: 10px;
+
     color: #9aa5bc;
 
     line-height: 1.6;
-
-    margin-bottom: 10px;
 }
 
 
@@ -848,9 +894,9 @@ input:focus {
 ========================= */
 
 footer {
-    text-align: center;
-
     margin-top: 40px;
+
+    text-align: center;
 
     color: #606b82;
 
@@ -896,10 +942,10 @@ footer {
         transform: rotate(270deg);
     }
 
+    .setup-result,
     .stats-grid,
     .compare-card,
-    .two-columns,
-    .setup-result {
+    .two-columns {
         grid-template-columns: 1fr;
     }
 
@@ -909,6 +955,10 @@ footer {
 
     .compare-values {
         grid-template-columns: 1fr;
+    }
+
+    .formula-flow {
+        justify-content: flex-start;
     }
 
 }
