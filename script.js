@@ -1,1011 +1,638 @@
-/* ==================================================
-   FPS SENSITIVITY CONVERTER
-   VERSION 5
-================================================== */
+/*
+    FPS Sensitivity Converter V6
 
+    Formula:
 
-/* ==================================================
-   GAME DATABASE
-================================================== */
+    cm/360 = (360 * 2.54) / (DPI * sensitivity * yaw)
 
-const games = {
+    target sensitivity =
+    (360 * 2.54) / (target DPI * source cm/360 * target yaw)
+*/
+
+const GAMES = {
 
     valorant: {
         name: "VALORANT",
         yaw: 0.07,
         confidence: "high",
-
-        settings: [
-            {
-                name: "Sensitivity",
-                valueType: "converted",
-                location: "Settings → General → Mouse → Sensitivity",
-                status: "Use calculated value"
-            },
-            {
-                name: "Mouse DPI",
-                valueType: "dpi",
-                location: "Your mouse software",
-                status: "Keep your target DPI"
-            },
-            {
-                name: "ADS Sensitivity",
-                value: "1.0",
-                location: "Settings → General → Mouse",
-                status: "Separate setting"
-            }
-        ]
+        path: "Settings → General → Mouse → Sensitivity",
+        zoom: "1.0"
     },
-
 
     cs2: {
         name: "Counter-Strike 2",
         yaw: 0.022,
         confidence: "high",
-
-        settings: [
-            {
-                name: "Sensitivity",
-                valueType: "converted",
-                location: "Settings → Keyboard / Mouse → Mouse Sensitivity",
-                status: "Use calculated value"
-            },
-            {
-                name: "Mouse DPI",
-                valueType: "dpi",
-                location: "Your mouse software",
-                status: "Keep your target DPI"
-            },
-            {
-                name: "Zoom Sensitivity",
-                value: "1.0",
-                location: "Settings → Keyboard / Mouse",
-                status: "Separate setting"
-            }
-        ]
+        path: "Settings → Keyboard / Mouse → Mouse Sensitivity",
+        zoom: "1.0"
     },
-
 
     apex: {
         name: "Apex Legends",
         yaw: 0.022,
         confidence: "high",
-
-        settings: [
-            {
-                name: "Mouse Sensitivity",
-                valueType: "converted",
-                location: "Settings → Mouse/Keyboard → Mouse Sensitivity",
-                status: "Use calculated value"
-            },
-            {
-                name: "Mouse DPI",
-                valueType: "dpi",
-                location: "Your mouse software",
-                status: "Keep your target DPI"
-            },
-            {
-                name: "ADS Mouse Sensitivity Multiplier",
-                value: "1.0",
-                location: "Settings → Mouse/Keyboard",
-                status: "Separate setting"
-            }
-        ]
+        path: "Settings → Mouse/Keyboard → Mouse Sensitivity",
+        zoom: "1.0"
     },
-
 
     overwatch: {
         name: "Overwatch 2",
         yaw: 0.0066,
         confidence: "high",
-
-        settings: [
-            {
-                name: "Horizontal Sensitivity",
-                valueType: "converted",
-                location: "Options → Controls → Mouse",
-                status: "Use calculated value"
-            },
-            {
-                name: "Vertical Sensitivity",
-                valueType: "converted",
-                location: "Options → Controls → Mouse",
-                status: "Use the same value"
-            },
-            {
-                name: "Mouse DPI",
-                valueType: "dpi",
-                location: "Your mouse software",
-                status: "Keep your target DPI"
-            },
-            {
-                name: "Relative Aim Sensitivity While Zoomed",
-                value: "100%",
-                location: "Options → Controls → Mouse",
-                status: "Separate setting"
-            }
-        ]
+        path: "Options → Controls → Mouse → Sensitivity",
+        zoom: "1.0"
     },
-
 
     fortnite: {
         name: "Fortnite",
         yaw: 0.0055555556,
         confidence: "experimental",
-
-        settings: [
-            {
-                name: "X-Axis Sensitivity",
-                valueType: "convertedPercent",
-                location: "Settings → Mouse and Keyboard → X-Axis Sensitivity",
-                status: "Experimental"
-            },
-            {
-                name: "Y-Axis Sensitivity",
-                valueType: "convertedPercent",
-                location: "Settings → Mouse and Keyboard → Y-Axis Sensitivity",
-                status: "Use same value as X"
-            },
-            {
-                name: "Targeting Sensitivity",
-                value: "100%",
-                location: "Settings → Mouse and Keyboard",
-                status: "Separate setting"
-            },
-            {
-                name: "Scope Sensitivity",
-                value: "100%",
-                location: "Settings → Mouse and Keyboard",
-                status: "Separate setting"
-            },
-            {
-                name: "Mouse DPI",
-                valueType: "dpi",
-                location: "Your mouse software",
-                status: "Keep your target DPI"
-            }
-        ]
+        path: "Settings → Mouse and Keyboard → X-Axis / Y-Axis Sensitivity",
+        zoom: "1.0"
     }
-
 };
 
 
-/* ==================================================
-   ELEMENTS
-================================================== */
+// ==============================
+// DOM ELEMENTS
+// ==============================
 
-const sourceGame =
-    document.getElementById("sourceGame");
+const sourceGame = document.getElementById("sourceGame");
+const sourceSens = document.getElementById("sourceSens");
+const sourceDpi = document.getElementById("sourceDpi");
 
-const targetGame =
-    document.getElementById("targetGame");
+const targetGame = document.getElementById("targetGame");
+const targetDpi = document.getElementById("targetDpi");
 
-const sourceSensitivity =
-    document.getElementById("sourceSensitivity");
+const convertButton = document.getElementById("convertButton");
+const swapButton = document.getElementById("swapButton");
 
-const sourceDpi =
-    document.getElementById("sourceDpi");
+const previewSens = document.getElementById("previewSens");
+const errorMessage = document.getElementById("errorMessage");
 
-const targetDpi =
-    document.getElementById("targetDpi");
+const resultSection = document.getElementById("resultSection");
 
-const convertedSensitivity =
-    document.getElementById("convertedSensitivity");
+const resultGame = document.getElementById("resultGame");
+const resultSens = document.getElementById("resultSens");
+const resultDpi = document.getElementById("resultDpi");
+const resultZoom = document.getElementById("resultZoom");
 
-const convertButton =
-    document.getElementById("convertButton");
+const sourceCm = document.getElementById("sourceCm");
+const targetCm = document.getElementById("targetCm");
 
-const swapButton =
-    document.getElementById("swapButton");
+const sourceEdpi = document.getElementById("sourceEdpi");
+const targetEdpi = document.getElementById("targetEdpi");
 
-const results =
-    document.getElementById("results");
+const instructionText = document.getElementById("instructionText");
 
-const resultGame =
-    document.getElementById("resultGame");
+const confidenceBox = document.getElementById("confidenceBox");
+const confidenceText = document.getElementById("confidenceText");
 
-const mainSensitivity =
-    document.getElementById("mainSensitivity");
-
-const resultDpi =
-    document.getElementById("resultDpi");
-
-const settingsList =
-    document.getElementById("settingsList");
-
-const sourceCm360 =
-    document.getElementById("sourceCm360");
-
-const targetCm360 =
-    document.getElementById("targetCm360");
-
-const sourceEdpi =
-    document.getElementById("sourceEdpi");
-
-const targetEdpi =
-    document.getElementById("targetEdpi");
-
-const copyButton =
-    document.getElementById("copyButton");
-
-const copyMessage =
-    document.getElementById("copyMessage");
-
-const fortniteNotice =
-    document.getElementById("fortniteNotice");
-
-const confidence =
-    document.getElementById("confidence");
-
-const confidenceIcon =
-    document.getElementById("confidenceIcon");
-
-const confidenceTitle =
-    document.getElementById("confidenceTitle");
-
-const confidenceText =
-    document.getElementById("confidenceText");
+const experimentalWarning =
+    document.getElementById("experimentalWarning");
 
 
-/* CM */
+// ==============================
+// UTILITY FUNCTIONS
+// ==============================
 
-const cmGame =
-    document.getElementById("cmGame");
+function roundNumber(value, decimals = 4) {
 
-const cmSensitivity =
-    document.getElementById("cmSensitivity");
+    if (!Number.isFinite(value)) {
+        return 0;
+    }
 
-const cmDpi =
-    document.getElementById("cmDpi");
-
-const cmButton =
-    document.getElementById("cmButton");
-
-const cmResult =
-    document.getElementById("cmResult");
-
-const cmFortniteNotice =
-    document.getElementById("cmFortniteNotice");
-
-
-/* ==================================================
-   HELPERS
-================================================== */
-
-function getGame(id) {
-
-    return games[id];
-
+    return Number(value.toFixed(decimals));
 }
 
 
-function formatSensitivity(value) {
+function formatNumber(value, decimals = 4) {
 
     if (!Number.isFinite(value)) {
         return "—";
     }
 
-    return Number(
-        value.toFixed(4)
-    ).toString();
-
+    return Number(value.toFixed(decimals)).toString();
 }
 
 
-function calculateCm360(
-    sensitivity,
-    dpi,
-    yaw
-) {
-
-    return (
-        (360 * 2.54) /
-        (
-            dpi *
-            sensitivity *
-            yaw
-        )
-    );
-
+function getGame(id) {
+    return GAMES[id];
 }
 
 
-/* ==================================================
-   CONVERTED SENSITIVITY
-================================================== */
+// ==============================
+// CM/360 CALCULATION
+// ==============================
 
-function calculateTargetSensitivity() {
+function calculateCm360(gameId, sensitivity, dpi) {
 
-    const source =
-        getGame(sourceGame.value);
+    const game = getGame(gameId);
 
-    const target =
-        getGame(targetGame.value);
-
-    const sensitivity =
-        Number(sourceSensitivity.value);
-
-    const sourceDpiValue =
-        Number(sourceDpi.value);
-
-    const targetDpiValue =
-        Number(targetDpi.value);
-
-
-    if (
-        !Number.isFinite(sensitivity) ||
-        sensitivity <= 0 ||
-        !Number.isFinite(sourceDpiValue) ||
-        sourceDpiValue <= 0 ||
-        !Number.isFinite(targetDpiValue) ||
-        targetDpiValue <= 0
-    ) {
-
-        convertedSensitivity.textContent = "—";
-
-        return null;
-
+    if (!game) {
+        throw new Error("Game not found.");
     }
 
+    if (sensitivity <= 0 || dpi <= 0) {
+        throw new Error("Sensitivity and DPI must be greater than 0.");
+    }
 
-    const sourceCm =
-        calculateCm360(
-            sensitivity,
-            sourceDpiValue,
-            source.yaw
-        );
-
-
-    const targetSensitivity =
-        (
-            360 * 2.54
-        ) /
-        (
-            targetDpiValue *
-            target.yaw *
-            sourceCm
-        );
-
-
-    convertedSensitivity.textContent =
-        formatSensitivity(
-            targetSensitivity
-        );
-
-
-    return {
-        source,
-        target,
-        sensitivity,
-        sourceDpiValue,
-        targetDpiValue,
-        sourceCm,
-        targetSensitivity
-    };
-
+    return (360 * 2.54) /
+        (dpi * sensitivity * game.yaw);
 }
 
 
-/* ==================================================
-   RENDER SETTINGS
-================================================== */
+// ==============================
+// SENSITIVITY CONVERSION
+// ==============================
 
-function renderSettings(
-    target,
-    targetSensitivity,
+function convertSensitivity(
+    sourceGameId,
+    sourceSensitivity,
+    sourceDpiValue,
+    targetGameId,
     targetDpiValue
 ) {
 
-    settingsList.innerHTML = "";
+    const source = getGame(sourceGameId);
+    const target = getGame(targetGameId);
 
+    if (!source || !target) {
+        throw new Error("Invalid game.");
+    }
 
-    target.settings.forEach(
-        function(setting) {
-
-            let value;
-
-
-            if (
-                setting.valueType ===
-                "converted"
-            ) {
-
-                value =
-                    formatSensitivity(
-                        targetSensitivity
-                    );
-
-            }
-
-            else if (
-                setting.valueType ===
-                "convertedPercent"
-            ) {
-
-                value =
-                    formatSensitivity(
-                        targetSensitivity
-                    ) + "%";
-
-            }
-
-            else if (
-                setting.valueType ===
-                "dpi"
-            ) {
-
-                value =
-                    targetDpiValue +
-                    " DPI";
-
-            }
-
-            else {
-
-                value =
-                    setting.value;
-
-            }
-
-
-            const item =
-                document.createElement(
-                    "div"
-                );
-
-
-            item.className =
-                "setting-item";
-
-
-            item.innerHTML = `
-
-                <div class="setting-top">
-
-                    <span class="setting-name">
-                        ${setting.name}
-                    </span>
-
-                    <strong class="setting-value">
-                        ${value}
-                    </strong>
-
-                </div>
-
-                <div class="setting-location">
-                    📍 ${setting.location}
-                </div>
-
-                <span class="setting-status">
-                    ${setting.status}
-                </span>
-
-            `;
-
-
-            settingsList.appendChild(
-                item
-            );
-
-        }
+    const cm360 = calculateCm360(
+        sourceGameId,
+        sourceSensitivity,
+        sourceDpiValue
     );
 
+    const targetSensitivity =
+        (360 * 2.54) /
+        (targetDpiValue * cm360 * target.yaw);
+
+    return {
+        sensitivity: targetSensitivity,
+        cm360: cm360
+    };
 }
 
 
-/* ==================================================
-   CONFIDENCE
-================================================== */
+// ==============================
+// VALIDATION
+// ==============================
 
-function updateConfidence(
-    source,
-    target
+function validateInputs() {
+
+    errorMessage.textContent = "";
+
+    const sens = Number(sourceSens.value);
+    const sourceDpiValue = Number(sourceDpi.value);
+    const targetDpiValue = Number(targetDpi.value);
+
+    if (!Number.isFinite(sens) || sens <= 0) {
+        errorMessage.textContent =
+            "Please enter a valid source sensitivity.";
+        return false;
+    }
+
+    if (!Number.isFinite(sourceDpiValue) || sourceDpiValue <= 0) {
+        errorMessage.textContent =
+            "Please enter a valid source DPI.";
+        return false;
+    }
+
+    if (!Number.isFinite(targetDpiValue) || targetDpiValue <= 0) {
+        errorMessage.textContent =
+            "Please enter a valid target DPI.";
+        return false;
+    }
+
+    return true;
+}
+
+
+// ==============================
+// MAIN CONVERSION
+// ==============================
+
+function performConversion(showResult = true) {
+
+    if (!validateInputs()) {
+        previewSens.textContent = "—";
+        return null;
+    }
+
+    try {
+
+        const sourceId = sourceGame.value;
+        const targetId = targetGame.value;
+
+        const sens = Number(sourceSens.value);
+        const sourceDpiValue = Number(sourceDpi.value);
+        const targetDpiValue = Number(targetDpi.value);
+
+        const result = convertSensitivity(
+            sourceId,
+            sens,
+            sourceDpiValue,
+            targetId,
+            targetDpiValue
+        );
+
+        previewSens.textContent =
+            formatNumber(result.sensitivity, 4);
+
+        if (showResult) {
+            displayResult(
+                sourceId,
+                targetId,
+                sens,
+                sourceDpiValue,
+                targetDpiValue,
+                result
+            );
+        }
+
+        return result;
+
+    } catch (error) {
+
+        errorMessage.textContent = error.message;
+        return null;
+    }
+}
+
+
+// ==============================
+// DISPLAY RESULT
+// ==============================
+
+function displayResult(
+    sourceId,
+    targetId,
+    sourceSensitivity,
+    sourceDpiValue,
+    targetDpiValue,
+    result
 ) {
 
-    if (
-        source.confidence === "experimental" ||
-        target.confidence === "experimental"
-    ) {
+    const source = getGame(sourceId);
+    const target = getGame(targetId);
 
-        confidenceIcon.textContent =
-            "⚠️";
+    resultSection.classList.remove("hidden");
 
-        confidenceTitle.textContent =
-            "Experimental";
+    resultGame.textContent = target.name;
 
-        confidenceText.textContent =
-            "At least one game uses a sensitivity model that should be physically verified.";
-
-        return;
-
-    }
-
-
-    confidenceIcon.textContent =
-        "🟢";
-
-    confidenceTitle.textContent =
-        "High confidence";
-
-    confidenceText.textContent =
-        "The conversion uses established yaw values for both games.";
-
-}
-
-
-/* ==================================================
-   MAIN CONVERSION
-================================================== */
-
-function convertSensitivity() {
-
-    const data =
-        calculateTargetSensitivity();
-
-
-    if (!data) {
-
-        alert(
-            "Please enter a valid sensitivity and DPI."
-        );
-
-        return;
-
-    }
-
-
-    const {
-        source,
-        target,
-        sensitivity,
-        sourceDpiValue,
-        targetDpiValue,
-        sourceCm,
-        targetSensitivity
-    } = data;
-
-
-    const targetCm =
-        calculateCm360(
-            targetSensitivity,
-            targetDpiValue,
-            target.yaw
-        );
-
-
-    const sourceEDPI =
-        sensitivity *
-        sourceDpiValue;
-
-
-    const targetEDPI =
-        targetSensitivity *
-        targetDpiValue;
-
-
-    resultGame.textContent =
-        target.name;
-
-
-    mainSensitivity.textContent =
-        formatSensitivity(
-            targetSensitivity
-        );
-
+    resultSens.textContent =
+        formatNumber(result.sensitivity, 4);
 
     resultDpi.textContent =
-        targetDpiValue +
-        " DPI";
+        `${formatNumber(targetDpiValue, 0)} DPI`;
 
+    resultZoom.textContent = target.zoom;
 
-    sourceCm360.textContent =
-        sourceCm.toFixed(2) +
-        " cm";
+    sourceCm.textContent =
+        `${formatNumber(result.cm360, 2)} cm`;
 
-
-    targetCm360.textContent =
-        targetCm.toFixed(2) +
-        " cm";
-
+    targetCm.textContent =
+        `${formatNumber(result.cm360, 2)} cm`;
 
     sourceEdpi.textContent =
-        sourceEDPI.toFixed(2);
-
+        formatNumber(sourceSensitivity * sourceDpiValue, 2);
 
     targetEdpi.textContent =
-        targetEDPI.toFixed(2);
+        formatNumber(result.sensitivity * targetDpiValue, 2);
 
+    document.getElementById("sensPath").textContent =
+        target.path;
 
-    renderSettings(
-        target,
-        targetSensitivity,
-        targetDpiValue
-    );
+    instructionText.textContent =
+        `In ${target.name}, set your sensitivity to ${formatNumber(result.sensitivity, 4)} and keep your mouse DPI at ${formatNumber(targetDpiValue, 0)} DPI. Your calculated physical sensitivity is approximately ${formatNumber(result.cm360, 2)} cm/360°.`;
 
+    // Confidence
 
-    updateConfidence(
-        source,
-        target
-    );
+    if (source.confidence === "experimental" ||
+        target.confidence === "experimental") {
 
+        confidenceBox.className =
+            "confidence experimental";
 
-    if (
-        source.confidence === "experimental" ||
-        target.confidence === "experimental"
-    ) {
-
-        fortniteNotice.classList.remove(
-            "hidden"
-        );
+        confidenceBox.innerHTML =
+            `🟡 <strong>Experimental</strong>
+             <span id="confidenceText">
+             At least one game uses a sensitivity model that should be physically verified.
+             </span>`;
 
     } else {
 
-        fortniteNotice.classList.add(
-            "hidden"
-        );
+        confidenceBox.className =
+            "confidence high";
 
+        confidenceBox.innerHTML =
+            `🟢 <strong>High confidence</strong>
+             <span id="confidenceText">
+             The conversion uses established sensitivity values.
+             </span>`;
     }
 
+    // Fortnite warning
 
-    results.classList.remove(
-        "hidden"
-    );
+    if (sourceId === "fortnite" || targetId === "fortnite") {
 
+        experimentalWarning.classList.remove("hidden");
 
-    setTimeout(
-        function() {
+        experimentalWarning.textContent =
+            "⚠️ Fortnite uses a different sensitivity scale. Treat this conversion as an estimate and verify the physical result in-game.";
 
-            results.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
+    } else {
 
-        },
-        50
-    );
+        experimentalWarning.classList.add("hidden");
+        experimentalWarning.textContent = "";
+    }
 
+    resultSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 }
 
 
-/* ==================================================
-   LIVE CALCULATION
-================================================== */
+// ==============================
+// LIVE PREVIEW
+// ==============================
 
-function liveUpdate() {
+function updatePreview() {
 
-    calculateTargetSensitivity();
+    if (
+        sourceSens.value === "" ||
+        sourceDpi.value === "" ||
+        targetDpi.value === ""
+    ) {
+        previewSens.textContent = "—";
+        return;
+    }
 
+    const result = performConversion(false);
+
+    if (result) {
+
+        previewSens.textContent =
+            formatNumber(result.sensitivity, 4);
+
+    } else {
+
+        previewSens.textContent = "—";
+    }
 }
 
 
-sourceSensitivity.addEventListener(
-    "input",
-    liveUpdate
-);
+// ==============================
+// SWAP SOURCE / TARGET
+// ==============================
 
-sourceDpi.addEventListener(
-    "input",
-    liveUpdate
-);
+function swapGames() {
 
-targetDpi.addEventListener(
-    "input",
-    liveUpdate
-);
+    const oldSourceGame = sourceGame.value;
+    const oldTargetGame = targetGame.value;
 
-sourceGame.addEventListener(
-    "change",
-    liveUpdate
-);
+    sourceGame.value = oldTargetGame;
+    targetGame.value = oldSourceGame;
 
-targetGame.addEventListener(
-    "change",
-    liveUpdate
-);
+    const oldSourceDpi = sourceDpi.value;
+    sourceDpi.value = targetDpi.value;
+    targetDpi.value = oldSourceDpi;
 
+    /*
+        The target sensitivity becomes the source sensitivity.
+        This makes the swap useful after a conversion.
+    */
 
-/* ==================================================
-   CONVERT BUTTON
-================================================== */
+    const previousResult =
+        resultSens.textContent;
 
-convertButton.addEventListener(
-    "click",
-    function() {
+    if (
+        previousResult !== "—" &&
+        previousResult !== ""
+    ) {
 
-        convertSensitivity();
+        const numericResult =
+            Number(previousResult.replace(",", "."));
 
+        if (Number.isFinite(numericResult)) {
+            sourceSens.value = numericResult;
+        }
     }
-);
+
+    updatePreview();
+}
 
 
-/* ==================================================
-   SWAP
-================================================== */
+// ==============================
+// QUICK DPI BUTTONS
+// ==============================
 
-swapButton.addEventListener(
-    "click",
-    function() {
+document.querySelectorAll("[data-dpi-source]")
+    .forEach(button => {
 
-        const oldSource =
-            sourceGame.value;
+        button.addEventListener("click", () => {
 
-        const oldTarget =
-            targetGame.value;
+            sourceDpi.value =
+                button.dataset.dpiSource;
 
+            updatePreview();
+        });
 
-        sourceGame.value =
-            oldTarget;
-
-        targetGame.value =
-            oldSource;
+    });
 
 
-        const oldDpi =
-            sourceDpi.value;
+document.querySelectorAll("[data-dpi-target]")
+    .forEach(button => {
 
-        sourceDpi.value =
-            targetDpi.value;
+        button.addEventListener("click", () => {
 
-        targetDpi.value =
-            oldDpi;
+            targetDpi.value =
+                button.dataset.dpiTarget;
 
+            updatePreview();
+        });
 
-        liveUpdate();
-
-
-        if (
-            sourceSensitivity.value.trim()
-            !== ""
-        ) {
-
-            convertSensitivity();
-
-        }
-
-    }
-);
+    });
 
 
-/* ==================================================
-   DPI PRESETS
-================================================== */
+// ==============================
+// COPY SETTINGS
+// ==============================
 
-document
-    .querySelectorAll(
-        "[data-source-dpi]"
-    )
-    .forEach(
-        function(button) {
+document.getElementById("copyButton")
+    .addEventListener("click", async () => {
 
-            button.addEventListener(
-                "click",
-                function() {
-
-                    sourceDpi.value =
-                        button.dataset.sourceDpi;
-
-                    liveUpdate();
-
-                }
-            );
-
-        }
-    );
-
-
-document
-    .querySelectorAll(
-        "[data-target-dpi]"
-    )
-    .forEach(
-        function(button) {
-
-            button.addEventListener(
-                "click",
-                function() {
-
-                    targetDpi.value =
-                        button.dataset.targetDpi;
-
-                    liveUpdate();
-
-                }
-            );
-
-        }
-    );
-
-
-/* ==================================================
-   COPY
-================================================== */
-
-copyButton.addEventListener(
-    "click",
-    async function() {
+        const game = resultGame.textContent;
+        const sensitivity = resultSens.textContent;
+        const dpi = resultDpi.textContent;
+        const cm = targetCm.textContent;
+        const zoom = resultZoom.textContent;
 
         const text =
 `FPS Sensitivity Converter
 
-Game: ${resultGame.textContent}
-Sensitivity: ${mainSensitivity.textContent}
-DPI: ${resultDpi.textContent}
-CM/360°: ${targetCm360.textContent}`;
+Game: ${game}
+Sensitivity: ${sensitivity}
+DPI: ${dpi}
+Zoom/ADS: ${zoom}
+CM/360°: ${cm}
 
+Use these settings in ${game}.`;
 
         try {
 
-            await navigator.clipboard.writeText(
-                text
-            );
+            await navigator.clipboard.writeText(text);
 
+            const button =
+                document.getElementById("copyButton");
 
-            copyMessage.classList.remove(
-                "hidden"
-            );
+            const oldText = button.textContent;
 
+            button.textContent = "✅ Copied!";
 
-            setTimeout(
-                function() {
+            setTimeout(() => {
+                button.textContent = oldText;
+            }, 1500);
 
-                    copyMessage.classList.add(
-                        "hidden"
-                    );
+        } catch {
 
-                },
-                2000
-            );
-
-
-        } catch (error) {
-
-            alert(
-                "Copy failed. Please copy the settings manually."
-            );
-
+            alert("Could not copy the settings.");
         }
 
-    }
+    });
+
+
+// ==============================
+// BUTTONS
+// ==============================
+
+convertButton.addEventListener(
+    "click",
+    () => performConversion(true)
+);
+
+swapButton.addEventListener(
+    "click",
+    swapGames
 );
 
 
-/* ==================================================
-   CM/360 CALCULATOR
-================================================== */
+// ==============================
+// ENTER KEY
+// ==============================
 
-cmButton.addEventListener(
-    "click",
-    function() {
+document.addEventListener("keydown", event => {
 
-        const game =
-            getGame(
-                cmGame.value
-            );
+    if (event.key === "Enter") {
 
+        const active =
+            document.activeElement;
+
+        if (
+            active.tagName === "INPUT" ||
+            active.tagName === "SELECT"
+        ) {
+            performConversion(true);
+        }
+    }
+
+});
+
+
+// ==============================
+// AUTO UPDATE
+// ==============================
+
+[
+    sourceGame,
+    sourceSens,
+    sourceDpi,
+    targetGame,
+    targetDpi
+].forEach(element => {
+
+    element.addEventListener(
+        "input",
+        updatePreview
+    );
+
+    element.addEventListener(
+        "change",
+        updatePreview
+    );
+
+});
+
+
+// ==============================
+// CM/360 CALCULATOR
+// ==============================
+
+document.getElementById("calculateCmButton")
+    .addEventListener("click", () => {
+
+        const gameId =
+            document.getElementById("cmGame").value;
 
         const sensitivity =
-            Number(
-                cmSensitivity.value
-            );
-
+            Number(document.getElementById("cmSens").value);
 
         const dpi =
-            Number(
-                cmDpi.value
-            );
+            Number(document.getElementById("cmDpi").value);
 
+        const resultBox =
+            document.getElementById("cmResult");
+
+        const resultValue =
+            document.getElementById("cmValue");
 
         if (
             !Number.isFinite(sensitivity) ||
-            sensitivity <= 0 ||
+            sensitivity <= 0
+        ) {
+
+            resultBox.classList.add("hidden");
+            return;
+        }
+
+        if (
             !Number.isFinite(dpi) ||
             dpi <= 0
         ) {
 
-            alert(
-                "Please enter a valid sensitivity and DPI."
-            );
-
+            resultBox.classList.add("hidden");
             return;
-
         }
 
+        try {
 
-        const result =
-            calculateCm360(
-                sensitivity,
-                dpi,
-                game.yaw
-            );
+            const cm =
+                calculateCm360(
+                    gameId,
+                    sensitivity,
+                    dpi
+                );
 
+            resultValue.textContent =
+                `${formatNumber(cm, 2)} cm`;
 
-        cmResult.textContent =
-            result.toFixed(2) +
-            " cm";
+            resultBox.classList.remove("hidden");
 
+        } catch {
 
-        if (
-            game.confidence ===
-            "experimental"
-        ) {
-
-            cmFortniteNotice.classList.remove(
-                "hidden"
-            );
-
-        } else {
-
-            cmFortniteNotice.classList.add(
-                "hidden"
-            );
-
+            resultBox.classList.add("hidden");
         }
 
-    }
-);
+    });
 
 
-/* ==================================================
-   ENTER KEY
-================================================== */
+// ==============================
+// INITIAL PREVIEW
+// ==============================
 
-[
-    sourceSensitivity,
-    sourceDpi,
-    targetDpi
-].forEach(
-    function(input) {
-
-        input.addEventListener(
-            "keydown",
-            function(event) {
-
-                if (
-                    event.key === "Enter"
-                ) {
-
-                    event.preventDefault();
-
-                    convertSensitivity();
-
-                }
-
-            }
-        );
-
-    }
-);
-
-
-[
-    cmSensitivity,
-    cmDpi
-].forEach(
-    function(input) {
-
-        input.addEventListener(
-            "keydown",
-            function(event) {
-
-                if (
-                    event.key === "Enter"
-                ) {
-
-                    event.preventDefault();
-
-                    cmButton.click();
-
-                }
-
-            }
-        );
-
-    }
-);
-
-
-/* ==================================================
-   INITIALIZE
-================================================== */
-
-liveUpdate();
+updatePreview();
