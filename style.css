@@ -10,10 +10,18 @@ html {
 
 body {
     min-height: 100vh;
+
     font-family: Arial, Helvetica, sans-serif;
+
     color: #ffffff;
+
     background:
-        radial-gradient(circle at top, #27376b 0%, #10162a 42%, #070a12 100%);
+        radial-gradient(
+            circle at top,
+            #293a73 0%,
+            #11182c 42%,
+            #070a12 100%
+        );
 }
 
 button,
@@ -43,6 +51,7 @@ a {
     z-index: 100;
 
     background: rgba(7, 10, 18, 0.9);
+
     backdrop-filter: blur(15px);
 
     border-bottom: 1px solid #202b44;
@@ -51,7 +60,9 @@ a {
 .nav-container {
     width: 92%;
     max-width: 1100px;
+
     min-height: 65px;
+
     margin: auto;
 
     display: flex;
@@ -71,7 +82,9 @@ a {
 
 .nav-container nav a {
     color: #9da8bf;
+
     font-size: 14px;
+
     transition: 0.2s;
 }
 
@@ -87,7 +100,9 @@ a {
 .container {
     width: 92%;
     max-width: 1050px;
+
     margin: auto;
+
     padding: 55px 0 40px;
 }
 
@@ -98,23 +113,29 @@ a {
 
 .hero {
     text-align: center;
+
     margin-bottom: 70px;
 }
 
 .hero-icon {
     margin-bottom: 15px;
+
     font-size: 50px;
 }
 
 .hero h1 {
     margin-bottom: 15px;
+
     font-size: clamp(32px, 6vw, 54px);
 }
 
 .hero p {
     max-width: 650px;
+
     margin: auto;
+
     color: #aab4ca;
+
     line-height: 1.6;
 }
 
@@ -124,6 +145,7 @@ a {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+
     gap: 8px;
 }
 
@@ -131,10 +153,13 @@ a {
     padding: 7px 10px;
 
     background: #111a2d;
+
     border: 1px solid #2c3955;
+
     border-radius: 20px;
 
     color: #8f9ab1;
+
     font-size: 11px;
 }
 
@@ -159,17 +184,21 @@ a {
     color: #8589ff;
 
     font-size: 11px;
+
     font-weight: bold;
+
     letter-spacing: 1.5px;
 }
 
 .section-heading h2 {
     margin-bottom: 8px;
+
     font-size: 28px;
 }
 
 .section-heading p {
     color: #8f9ab1;
+
     line-height: 1.5;
 }
 
@@ -180,13 +209,17 @@ a {
 
 .converter-card {
     display: flex;
+
     align-items: center;
+
     gap: 20px;
 
     padding: 25px;
 
     background: rgba(18, 25, 44, 0.95);
+
     border: 1px solid #293651;
+
     border-radius: 20px;
 }
 
@@ -196,13 +229,17 @@ a {
     padding: 23px;
 
     background: #0e1527;
+
     border: 1px solid #26324d;
+
     border-radius: 15px;
 }
 
 .step {
     display: flex;
+
     align-items: center;
+
     gap: 11px;
 
     margin-bottom: 25px;
@@ -213,6 +250,7 @@ a {
     height: 32px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -225,7 +263,9 @@ a {
 
 .step small {
     color: #727e99;
+
     font-size: 10px;
+
     letter-spacing: 1px;
 }
 
@@ -244,6 +284,7 @@ label {
     margin-bottom: 7px;
 
     color: #aab4ca;
+
     font-size: 13px;
 }
 
@@ -252,12 +293,15 @@ input {
     width: 100%;
 
     padding: 13px;
+
     margin-bottom: 18px;
 
     background: #080d1a;
+
     color: #ffffff;
 
     border: 1px solid #303c59;
+
     border-radius: 9px;
 
     outline: none;
@@ -273,6 +317,57 @@ input:focus {
 
 
 /* =========================
+   DPI PRESETS
+========================= */
+
+.dpi-presets {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    margin-top: -8px;
+
+    margin-bottom: 18px;
+}
+
+.dpi-presets span {
+    width: 100%;
+
+    margin-bottom: 2px;
+
+    color: #66728b;
+
+    font-size: 10px;
+}
+
+.dpi-presets button {
+    padding: 6px 9px;
+
+    background: #111a2d;
+
+    color: #9da8bf;
+
+    border: 1px solid #303c59;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+}
+
+.dpi-presets button:hover {
+    background: #1b2742;
+
+    color: #ffffff;
+
+    border-color: #6366f1;
+}
+
+
+/* =========================
    SWAP
 ========================= */
 
@@ -283,9 +378,11 @@ input:focus {
     height: 50px;
 
     border: none;
+
     border-radius: 50%;
 
     background: #6366f1;
+
     color: #ffffff;
 
     font-size: 24px;
@@ -295,57 +392,47 @@ input:focus {
 
 .swap-button:hover {
     background: #777aff;
+
     transform: rotate(180deg);
 }
 
 
 /* =========================
-   TARGET INFO
+   LIVE RESULT
 ========================= */
-
-.target-dpi-box,
-.live-result {
-    padding: 13px;
-
-    background: #080d1a;
-    border: 1px solid #303c59;
-    border-radius: 9px;
-}
-
-.target-dpi-box {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 18px;
-}
-
-.target-dpi-box span,
-.live-result small {
-    color: #727e99;
-    font-size: 10px;
-    letter-spacing: 1px;
-}
-
-.target-dpi-box strong {
-    margin: 5px 0;
-    font-size: 18px;
-}
-
-.target-dpi-box small {
-    color: #68748d;
-    font-size: 11px;
-}
 
 .live-result {
     min-height: 72px;
 
     display: flex;
+
     flex-direction: column;
+
     justify-content: center;
+
+    padding: 13px;
+
+    background: #080d1a;
+
+    border: 1px solid #303c59;
+
+    border-radius: 9px;
+}
+
+.live-result small {
+    color: #727e99;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
 }
 
 .live-result strong {
     margin-top: 5px;
+
     font-size: 24px;
+
+    color: #8b8eff;
 }
 
 
@@ -357,12 +444,15 @@ input:focus {
     width: 100%;
 
     margin-top: 18px;
+
     padding: 16px;
 
     border: none;
+
     border-radius: 11px;
 
     background: #6366f1;
+
     color: #ffffff;
 
     font-weight: bold;
@@ -372,6 +462,7 @@ input:focus {
 
 .primary-button:hover {
     background: #777aff;
+
     transform: translateY(-2px);
 }
 
@@ -383,9 +474,11 @@ input:focus {
     padding: 10px 15px;
 
     border: 1px solid #34415f;
+
     border-radius: 8px;
 
     background: #10182b;
+
     color: #ffffff;
 }
 
@@ -400,11 +493,13 @@ input:focus {
 
 .result-card {
     margin-top: 25px;
+
     padding: 25px;
 
     background: rgba(18, 25, 44, 0.95);
 
     border: 1px solid #293651;
+
     border-radius: 20px;
 }
 
@@ -414,7 +509,9 @@ input:focus {
 
 .result-top {
     display: flex;
+
     align-items: flex-start;
+
     justify-content: space-between;
 
     gap: 20px;
@@ -424,6 +521,47 @@ input:focus {
 
 .result-top h2 {
     font-size: 23px;
+}
+
+
+/* =========================
+   CONFIDENCE
+========================= */
+
+.confidence {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 14px;
+
+    margin-bottom: 18px;
+
+    background: #0d1628;
+
+    border: 1px solid #293651;
+
+    border-radius: 10px;
+}
+
+.confidence > span {
+    font-size: 22px;
+}
+
+.confidence strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 13px;
+}
+
+.confidence p {
+    color: #7f8ba4;
+
+    font-size: 11px;
 }
 
 
@@ -445,7 +583,9 @@ input:focus {
     padding: 20px;
 
     background: #080d1a;
+
     border: 1px solid #303c59;
+
     border-radius: 12px;
 }
 
@@ -455,7 +595,9 @@ input:focus {
     margin-bottom: 8px;
 
     color: #727e99;
+
     font-size: 10px;
+
     letter-spacing: 1px;
 }
 
@@ -465,12 +607,13 @@ input:focus {
 
 .setup-sensitivity strong {
     color: #8b8eff;
+
     font-size: 32px;
 }
 
 
 /* =========================
-   SETTINGS SECTION
+   SETTINGS
 ========================= */
 
 .settings-section {
@@ -479,6 +622,7 @@ input:focus {
 
 .settings-title {
     display: flex;
+
     align-items: center;
 
     gap: 15px;
@@ -491,11 +635,14 @@ input:focus {
     height: 42px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     background: #111a31;
+
     border: 1px solid #303d61;
+
     border-radius: 10px;
 
     font-size: 20px;
@@ -507,16 +654,13 @@ input:focus {
 
 .settings-title p {
     color: #7f8ba4;
+
     font-size: 12px;
 }
 
-
-/* =========================
-   SETTINGS LIST
-========================= */
-
 .settings-list {
     display: grid;
+
     gap: 10px;
 }
 
@@ -526,12 +670,15 @@ input:focus {
     background: #0e1527;
 
     border: 1px solid #293651;
+
     border-radius: 10px;
 }
 
 .setting-top {
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
     gap: 15px;
@@ -539,12 +686,15 @@ input:focus {
 
 .setting-name {
     color: #aeb8cc;
+
     font-size: 13px;
 }
 
 .setting-value {
     color: #8b8eff;
+
     font-size: 17px;
+
     font-weight: bold;
 
     text-align: right;
@@ -554,7 +704,9 @@ input:focus {
     margin-top: 8px;
 
     color: #737f98;
+
     font-size: 11px;
+
     line-height: 1.5;
 }
 
@@ -562,6 +714,7 @@ input:focus {
     display: inline-block;
 
     margin-top: 9px;
+
     padding: 4px 7px;
 
     border-radius: 5px;
@@ -575,7 +728,7 @@ input:focus {
 
 
 /* =========================
-   COPY MESSAGE
+   COPY
 ========================= */
 
 .copy-message {
@@ -613,6 +766,7 @@ input:focus {
     padding: 17px;
 
     background: #0e1527;
+
     border-radius: 10px;
 }
 
@@ -622,6 +776,7 @@ input:focus {
     margin-bottom: 7px;
 
     color: #7e8aa4;
+
     font-size: 12px;
 }
 
@@ -659,6 +814,7 @@ input:focus {
 
 .formula-card {
     padding: 20px;
+
     margin-top: 20px;
 
     background: #0e1527;
@@ -674,6 +830,7 @@ input:focus {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     flex-wrap: wrap;
@@ -718,6 +875,7 @@ input:focus {
     background: rgba(18, 25, 44, 0.95);
 
     border: 1px solid #293651;
+
     border-radius: 18px;
 }
 
@@ -747,7 +905,9 @@ input:focus {
     display: block;
 
     color: #727e99;
+
     font-size: 10px;
+
     letter-spacing: 1px;
 }
 
@@ -757,6 +917,8 @@ input:focus {
     margin-top: 7px;
 
     font-size: 40px;
+
+    color: #8b8eff;
 }
 
 
@@ -778,6 +940,7 @@ input:focus {
     background: #0e1527;
 
     border: 1px solid #293651;
+
     border-radius: 13px;
 }
 
@@ -807,6 +970,7 @@ input:focus {
     background: rgba(18, 25, 44, 0.8);
 
     border: 1px solid #293651;
+
     border-radius: 17px;
 }
 
@@ -860,6 +1024,7 @@ footer {
 
     .converter-card {
         flex-direction: column;
+
         padding: 18px;
     }
 
@@ -892,6 +1057,7 @@ footer {
 
     .setting-top {
         align-items: flex-start;
+
         flex-direction: column;
     }
 
