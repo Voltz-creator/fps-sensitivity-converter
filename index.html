@@ -1,669 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta
-        name="description"
-        content="Free FPS sensitivity converter for VALORANT, CS2, Apex Legends, Overwatch 2 and Fortnite."
-    >
-
+    <meta name="description" content="Free FPS sensitivity converter. Match your mouse sensitivity between popular FPS games using the same cm/360°.">
     <title>FPS Sensitivity Converter</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header class="navbar">
-    <div class="nav-container">
-
-        <a href="#" class="brand">
-            🎯 FPS Sens Converter
-        </a>
-
-        <nav>
-            <a href="#converter">Converter</a>
-            <a href="#cm360">CM/360</a>
-            <a href="#how">How it works</a>
-        </nav>
-
-    </div>
+    <div class="logo">FPS Sens Converter</div>
+    <div class="version">V6</div>
 </header>
-
 
 <main class="container">
 
-    <!-- HERO -->
-
     <section class="hero">
-
-        <div class="hero-icon">🎯</div>
-
+        <p class="badge">FREE FPS TOOL</p>
         <h1>FPS Sensitivity Converter</h1>
-
-        <p>
-            Match your physical mouse movement between popular FPS games.
-        </p>
-
-        <div class="hero-tags">
-            <span>VALORANT</span>
-            <span>CS2</span>
-            <span>APEX</span>
-            <span>OVERWATCH 2</span>
-            <span>FORTNITE</span>
-        </div>
-
+        <p>Keep the same physical mouse movement between FPS games.</p>
     </section>
 
+    <section class="converter-card">
 
-    <!-- CONVERTER -->
-
-    <section id="converter" class="section">
-
-        <div class="section-heading">
-
-            <span class="badge">CONVERTER</span>
-
-            <h2>Convert your sensitivity</h2>
-
-            <p>
-                Enter your sensitivity and DPI to calculate an equivalent
-                physical mouse sensitivity.
-            </p>
-
-        </div>
-
-
-        <div class="converter-card">
+        <div class="steps">
 
             <!-- SOURCE -->
+            <div class="step-card">
+                <div class="step-number">1</div>
 
-            <div class="game-card">
+                <h2>Current Game</h2>
+                <p class="section-label">SOURCE</p>
 
-                <div class="step">
-
-                    <span>1</span>
-
-                    <div>
-                        <small>CURRENT GAME</small>
-                        <h3>Source</h3>
-                    </div>
-
-                </div>
-
-
-                <label for="sourceGame">
-                    Game
-                </label>
-
+                <label for="sourceGame">Game</label>
                 <select id="sourceGame">
-
                     <option value="valorant">VALORANT</option>
                     <option value="cs2">Counter-Strike 2</option>
                     <option value="apex">Apex Legends</option>
                     <option value="overwatch">Overwatch 2</option>
                     <option value="fortnite">Fortnite</option>
-
                 </select>
 
-
-                <label for="sourceSensitivity">
-                    Sensitivity
-                </label>
-
+                <label for="sourceSens">Sensitivity</label>
                 <input
-                    id="sourceSensitivity"
+                    id="sourceSens"
                     type="number"
-                    min="0"
                     step="any"
-                    placeholder="Example: 0.35"
+                    min="0"
+                    placeholder="e.g. 0.35"
+                    value="0.35"
                 >
 
-
-                <label for="sourceDpi">
-                    Mouse DPI
-                </label>
-
+                <label for="sourceDpi">Mouse DPI</label>
                 <input
                     id="sourceDpi"
                     type="number"
-                    min="1"
                     step="1"
+                    min="1"
+                    placeholder="e.g. 800"
                     value="800"
                 >
 
-
-                <div class="dpi-presets">
-
+                <div class="quick-dpi">
                     <span>Quick DPI:</span>
-
-                    <button type="button" data-source-dpi="400">400</button>
-                    <button type="button" data-source-dpi="800">800</button>
-                    <button type="button" data-source-dpi="1600">1600</button>
-                    <button type="button" data-source-dpi="3200">3200</button>
-
+                    <button type="button" data-dpi-source="400">400</button>
+                    <button type="button" data-dpi-source="800">800</button>
+                    <button type="button" data-dpi-source="1600">1600</button>
+                    <button type="button" data-dpi-source="3200">3200</button>
                 </div>
-
             </div>
 
-
             <!-- SWAP -->
-
-            <button
-                id="swapButton"
-                class="swap-button"
-                type="button"
-                title="Swap games"
-            >
+            <button id="swapButton" class="swap-button" type="button" title="Swap games">
                 ⇄
             </button>
 
-
             <!-- TARGET -->
+            <div class="step-card">
+                <div class="step-number">2</div>
 
-            <div class="game-card">
+                <h2>Target Game</h2>
+                <p class="section-label">TARGET</p>
 
-                <div class="step">
-
-                    <span>2</span>
-
-                    <div>
-                        <small>TARGET GAME</small>
-                        <h3>Target</h3>
-                    </div>
-
-                </div>
-
-
-                <label for="targetGame">
-                    Game
-                </label>
-
+                <label for="targetGame">Game</label>
                 <select id="targetGame">
-
                     <option value="cs2">Counter-Strike 2</option>
                     <option value="valorant">VALORANT</option>
                     <option value="apex">Apex Legends</option>
                     <option value="overwatch">Overwatch 2</option>
                     <option value="fortnite">Fortnite</option>
-
                 </select>
 
-
-                <label for="targetDpi">
-                    Target DPI
-                </label>
-
+                <label for="targetDpi">Target DPI</label>
                 <input
                     id="targetDpi"
                     type="number"
-                    min="1"
                     step="1"
+                    min="1"
+                    placeholder="e.g. 800"
                     value="800"
                 >
 
-
-                <div class="dpi-presets">
-
+                <div class="quick-dpi">
                     <span>Quick DPI:</span>
-
-                    <button type="button" data-target-dpi="400">400</button>
-                    <button type="button" data-target-dpi="800">800</button>
-                    <button type="button" data-target-dpi="1600">1600</button>
-                    <button type="button" data-target-dpi="3200">3200</button>
-
+                    <button type="button" data-dpi-target="400">400</button>
+                    <button type="button" data-dpi-target="800">800</button>
+                    <button type="button" data-dpi-target="1600">1600</button>
+                    <button type="button" data-dpi-target="3200">3200</button>
                 </div>
 
-
-                <div class="live-result">
-
-                    <small>CONVERTED SENSITIVITY</small>
-
-                    <strong id="convertedSensitivity">
-                        —
-                    </strong>
-
-                </div>
-
+                <p class="dpi-tip">
+                    💡 You can use a different DPI. The converter compensates for it.
+                </p>
             </div>
 
         </div>
 
+        <div id="errorMessage" class="error-message"></div>
 
-        <button
-            id="convertButton"
-            class="primary-button"
-            type="button"
-        >
+        <div class="converted-preview">
+            <span>CONVERTED SENSITIVITY</span>
+            <strong id="previewSens">—</strong>
+        </div>
+
+        <button id="convertButton" class="convert-button" type="button">
             Convert sensitivity
         </button>
 
+    </section>
 
-        <!-- RESULT -->
+    <!-- RESULT -->
+    <section id="resultSection" class="result-section hidden">
 
-        <div
-            id="results"
-            class="result-card hidden"
-        >
+        <div class="result-header">
+            <p class="badge">RESULT</p>
+            <h2>Your target setup</h2>
 
-            <div class="result-top">
+            <button id="copyButton" class="copy-button" type="button">
+                📋 Copy settings
+            </button>
+        </div>
 
-                <div>
+        <div id="confidenceBox" class="confidence high">
+            🟢 <strong>High confidence</strong>
+            <span id="confidenceText">
+                The conversion uses established sensitivity values.
+            </span>
+        </div>
 
-                    <span class="badge">RESULT</span>
+        <div class="target-setup">
 
-                    <h2>Your target setup</h2>
-
-                </div>
-
-                <button
-                    id="copyButton"
-                    class="secondary-button"
-                    type="button"
-                >
-                    📋 Copy settings
-                </button>
-
+            <div class="game-result">
+                <span>GAME</span>
+                <strong id="resultGame">—</strong>
             </div>
 
+            <div class="setup-grid">
 
-            <!-- CONFIDENCE -->
-
-            <div
-                id="confidence"
-                class="confidence"
-            >
-
-                <span id="confidenceIcon">🟢</span>
-
-                <div>
-
-                    <strong id="confidenceTitle">
-                        High confidence
-                    </strong>
-
-                    <p id="confidenceText">
-                        This conversion uses a well-established yaw value.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- MAIN RESULT -->
-
-            <div class="setup-result">
-
-                <div>
-
-                    <span>GAME</span>
-
-                    <strong id="resultGame">—</strong>
-
-                </div>
-
-
-                <div class="setup-sensitivity">
-
+                <div class="setup-item">
                     <span>SENSITIVITY</span>
-
-                    <strong id="mainSensitivity">—</strong>
-
+                    <strong id="resultSens">—</strong>
+                    <small id="sensPath">Settings → Mouse</small>
                 </div>
 
+                <div class="setup-item">
+                    <span>DPI</span>
+                    <strong id="resultDpi">—</strong>
+                    <small>Your mouse software</small>
+                </div>
+
+                <div class="setup-item">
+                    <span>ZOOM / ADS</span>
+                    <strong id="resultZoom">1.0</strong>
+                    <small id="zoomPath">Separate setting</small>
+                </div>
+
+            </div>
+
+            <div id="experimentalWarning" class="warning hidden"></div>
+
+            <div class="what-to-put">
+                <div class="target-icon">🎯</div>
 
                 <div>
-
-                    <span>DPI</span>
-
-                    <strong id="resultDpi">—</strong>
-
+                    <h3>What should I put in my game?</h3>
+                    <p id="instructionText">—</p>
                 </div>
-
             </div>
-
-
-            <!-- SETTINGS -->
-
-            <section class="settings-section">
-
-                <div class="settings-title">
-
-                    <div class="settings-icon">
-                        ⚙️
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            What should I put in the game?
-                        </h3>
-
-                        <p>
-                            Use these settings in your target game.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div
-                    id="settingsList"
-                    class="settings-list"
-                ></div>
-
-            </section>
-
-
-            <div
-                id="copyMessage"
-                class="copy-message hidden"
-            >
-                ✓ Settings copied to clipboard
-            </div>
-
-
-            <!-- STATS -->
-
-            <div class="stats-grid">
-
-                <div class="stat">
-
-                    <span>Source CM/360°</span>
-
-                    <strong id="sourceCm360">—</strong>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <span>Target CM/360°</span>
-
-                    <strong id="targetCm360">—</strong>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <span>Source eDPI</span>
-
-                    <strong id="sourceEdpi">—</strong>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <span>Target eDPI</span>
-
-                    <strong id="targetEdpi">—</strong>
-
-                </div>
-
-            </div>
-
-
-            <!-- FORTNITE WARNING -->
-
-            <div
-                id="fortniteNotice"
-                class="notice warning hidden"
-            >
-
-                ⚠️
-
-                <strong>Fortnite:</strong>
-
-                This conversion is experimental. Fortnite uses a
-                different sensitivity scale and separate settings.
-
-            </div>
-
-
-            <!-- FORMULA -->
-
-            <div class="formula-card">
-
-                <h3>How the conversion works</h3>
-
-                <div class="formula-flow">
-
-                    <span>Source sensitivity</span>
-                    <b>→</b>
-                    <span>Source yaw</span>
-                    <b>→</b>
-                    <span>CM/360°</span>
-                    <b>→</b>
-                    <span>Target yaw</span>
-                    <b>→</b>
-                    <span>Target sensitivity</span>
-
-                </div>
-
-            </div>
-
-
-            <p class="small-warning">
-
-                This conversion targets horizontal hipfire sensitivity.
-                ADS, scopes, FOV and game-specific multipliers may behave
-                differently.
-
-            </p>
 
         </div>
 
-    </section>
+        <div class="stats-grid">
 
+            <div class="stat">
+                <span>Source CM/360°</span>
+                <strong id="sourceCm">—</strong>
+            </div>
 
-    <!-- CM/360 -->
+            <div class="stat">
+                <span>Target CM/360°</span>
+                <strong id="targetCm">—</strong>
+            </div>
 
-    <section id="cm360" class="section">
+            <div class="stat">
+                <span>Source eDPI</span>
+                <strong id="sourceEdpi">—</strong>
+            </div>
 
-        <div class="section-heading">
+            <div class="stat">
+                <span>Target eDPI</span>
+                <strong id="targetEdpi">—</strong>
+            </div>
 
-            <span class="badge">CM/360</span>
+        </div>
 
-            <h2>CM/360° Calculator</h2>
+        <div class="method-card">
+            <h3>How the conversion works</h3>
+
+            <div class="formula">
+                <span>Source sensitivity</span>
+                <b>→</b>
+                <span>Source yaw</span>
+                <b>→</b>
+                <span>CM/360°</span>
+                <b>→</b>
+                <span>Target yaw</span>
+                <b>→</b>
+                <span>Target sensitivity</span>
+            </div>
 
             <p>
-                Find the physical mouse distance required for a complete
-                360° turn.
+                This conversion targets horizontal hipfire sensitivity.
+                ADS, scopes, FOV and game-specific multipliers can behave differently.
             </p>
-
-        </div>
-
-
-        <div class="tool-card">
-
-            <label for="cmGame">
-                Game
-            </label>
-
-            <select id="cmGame">
-
-                <option value="valorant">VALORANT</option>
-                <option value="cs2">Counter-Strike 2</option>
-                <option value="apex">Apex Legends</option>
-                <option value="overwatch">Overwatch 2</option>
-                <option value="fortnite">Fortnite</option>
-
-            </select>
-
-
-            <div class="two-columns">
-
-                <div>
-
-                    <label for="cmSensitivity">
-                        Sensitivity
-                    </label>
-
-                    <input
-                        id="cmSensitivity"
-                        type="number"
-                        min="0"
-                        step="any"
-                        placeholder="Example: 0.35"
-                    >
-
-                </div>
-
-
-                <div>
-
-                    <label for="cmDpi">
-                        DPI
-                    </label>
-
-                    <input
-                        id="cmDpi"
-                        type="number"
-                        min="1"
-                        step="1"
-                        value="800"
-                    >
-
-                </div>
-
-            </div>
-
-
-            <button
-                id="cmButton"
-                class="primary-button"
-                type="button"
-            >
-                Calculate CM/360°
-            </button>
-
-
-            <div class="cm-result">
-
-                <small>YOUR CM/360°</small>
-
-                <strong id="cmResult">—</strong>
-
-            </div>
-
-
-            <div
-                id="cmFortniteNotice"
-                class="notice warning hidden"
-            >
-                ⚠️ Fortnite result is experimental.
-            </div>
-
         </div>
 
     </section>
 
+    <!-- CM360 -->
+    <section class="calculator-card">
 
-    <!-- HOW IT WORKS -->
-
-    <section id="how" class="section">
-
-        <div class="section-heading">
-
-            <span class="badge">HOW IT WORKS</span>
-
-            <h2>Why CM/360°?</h2>
-
+        <div class="section-title">
+            <p class="badge">CM/360</p>
+            <h2>CM/360° Calculator</h2>
+            <p>
+                Find out how far you move your mouse to perform a complete 360° turn.
+            </p>
         </div>
 
+        <div class="calculator-grid">
 
-        <div class="info-grid">
-
-            <div class="info-box">
-
-                <div class="info-number">01</div>
-
-                <h3>Your sensitivity</h3>
-
-                <p>
-                    We take your current sensitivity and mouse DPI.
-                </p>
-
+            <div>
+                <label for="cmGame">Game</label>
+                <select id="cmGame">
+                    <option value="valorant">VALORANT</option>
+                    <option value="cs2">Counter-Strike 2</option>
+                    <option value="apex">Apex Legends</option>
+                    <option value="overwatch">Overwatch 2</option>
+                    <option value="fortnite">Fortnite</option>
+                </select>
             </div>
 
-
-            <div class="info-box">
-
-                <div class="info-number">02</div>
-
-                <h3>Physical movement</h3>
-
-                <p>
-                    We calculate how far your mouse must travel for
-                    a complete 360° turn.
-                </p>
-
+            <div>
+                <label for="cmSens">Sensitivity</label>
+                <input id="cmSens" type="number" step="any" min="0" placeholder="Sensitivity">
             </div>
 
-
-            <div class="info-box">
-
-                <div class="info-number">03</div>
-
-                <h3>Target game</h3>
-
-                <p>
-                    We calculate the target sensitivity that produces
-                    the same physical movement.
-                </p>
-
+            <div>
+                <label for="cmDpi">DPI</label>
+                <input id="cmDpi" type="number" step="1" min="1" placeholder="DPI" value="800">
             </div>
 
         </div>
 
-    </section>
+        <button id="calculateCmButton" class="secondary-button" type="button">
+            Calculate CM/360°
+        </button>
 
-
-    <!-- INFORMATION -->
-
-    <section class="info-card">
-
-        <h2>What is CM/360°?</h2>
-
-        <p>
-            CM/360° is the physical distance your mouse must travel
-            to make a complete 360° turn in-game.
-        </p>
-
-        <p>
-            Matching CM/360° helps reproduce the same physical mouse
-            movement between different FPS games.
-        </p>
-
-        <p>
-            The visual feeling can still differ because games use
-            different FOV systems, ADS behavior and sensitivity settings.
-        </p>
+        <div id="cmResult" class="cm-result hidden">
+            <span>YOUR CM/360°</span>
+            <strong id="cmValue">—</strong>
+        </div>
 
     </section>
-
-
-    <footer>
-
-        <p>
-            FPS Sensitivity Converter • V5
-        </p>
-
-        <p>
-            Free • No account • No downloads
-        </p>
-
-    </footer>
 
 </main>
 
+<footer>
+    FPS Sensitivity Converter • V6 • Free tool
+</footer>
 
 <script src="script.js"></script>
 
