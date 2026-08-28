@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://voltz-creator.github.io/fps-sensitivity-converter/sitemap.xml
